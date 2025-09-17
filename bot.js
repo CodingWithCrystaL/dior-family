@@ -109,15 +109,15 @@ client.on("interactionCreate", async interaction => {
 // ---------- Helper functions ----------
 function createEventEmbed(eventName, startTime) {
   return new EmbedBuilder()
-    .setTitle(`📢 ${eventName}`)
+    .setTitle(`🥏 ${eventName}`)
     .setDescription(
       `⏰ The event begins in **10 minutes**\n` +
-      `🕒 Start Time: **${startTime} (server time)**\n\n` +
-      `🔽 Click below to register or view registered players`
+      `🎯 Start Time: **${startTime} (server time)**\n\n` +
+      `🐾 Click below to **register** or **view registered players**`
     )
     .setColor(0x00ddff)
     .addFields({ 
-      name: "Registered Participants", 
+      name: "", 
       value: registrations[eventName].length ? registrations[eventName].join("\n") : "—" 
     })
     .setThumbnail("https://raw.githubusercontent.com/CodingWithCrystaL/dior-family/refs/heads/main/file_00000000810061fba1eb3f3e52f6e605.jpeg")
