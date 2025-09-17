@@ -63,7 +63,7 @@ client.once("ready", async () => {
 
         registrations[eventName] = registrations[eventName] || [];
 
-        const embed = createEventEmbed(eventName);
+        const embed = createEventEmbed(eventName, timeStr); // pass original start time
         const row = createButtonRow(eventName);
 
         await channel.send({ content: `${role}`, embeds: [embed], components: [row] });
@@ -98,7 +98,7 @@ client.on("interactionCreate", async interaction => {
       const eventName = interaction.options.getString("event");
       registrations[eventName] = registrations[eventName] || [];
 
-      const embed = createEventEmbed(eventName);
+      const embed = createEventEmbed(eventName, "??:??"); // preview doesn't know real time, placeholder
       const row = createButtonRow(eventName);
 
       await interaction.reply({ content: "Preview:", embeds: [embed], components: [row], ephemeral: true });
@@ -107,14 +107,18 @@ client.on("interactionCreate", async interaction => {
 });
 
 // ---------- Helper functions ----------
-function createEventEmbed(eventName) {
+function createEventEmbed(eventName, startTime) {
   return new EmbedBuilder()
-    .setTitle(`${eventName} starts in 10 minutes!`)
-    .setDescription(`Click the buttons below to register or get more info.`)
+    .setTitle(`📢 ${eventName}`)
+    .setDescription(
+      `⏰ The event begins in **10 minutes**\n` +
+      `🕒 Start Time: **${startTime} (server time)**\n\n` +
+      `🔽 Click below to register or view registered players`
+    )
     .setColor(0x00ddff)
     .addFields({ 
       name: "Registered Participants", 
-      value: registrations[eventName].length ? registrations[eventName].join("\n") : "None yet" 
+      value: registrations[eventName].length ? registrations[eventName].join("\n") : "—" 
     })
     .setThumbnail("https://raw.githubusercontent.com/CodingWithCrystaL/dior-family/refs/heads/main/file_00000000810061fba1eb3f3e52f6e605.jpeg")
     .setImage("https://raw.githubusercontent.com/CodingWithCrystaL/dior-family/refs/heads/main/standard.gif")
